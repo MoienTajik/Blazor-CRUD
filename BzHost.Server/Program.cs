@@ -17,6 +17,7 @@ namespace BzHost.Server
                     .AddCommandLine(args)
                     .Build())
                 .UseStartup<Startup>()
+                .UseUrls("http://localhost:5000")
                 .Build();
     }
 }
