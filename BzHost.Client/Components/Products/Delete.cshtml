@@ -1,0 +1,57 @@
+@page "/products/delete/{id}"
+@inject ProductService productService
+@inject Microsoft.AspNetCore.Blazor.Services.IUriHelper UriHelper
+
+<h2>Delete</h2>
+
+@if(product == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <h3>Are you sure you want to delete this product ?</h3>
+    <div>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Name
+            </dt>
+
+            <dd>
+                @product.Name
+            </dd>
+
+            <dt>
+                Created At
+            </dt>
+
+            <dd>
+                @product.CreatedAt.ToShortDateString()
+            </dd>
+        </dl>
+
+        <form>
+            <div class="form-actions no-color">
+                <a href="/products" class="btn btn-default">Back to List</a>
+                <input type="submit" value="Delete" class="btn btn-danger" @onclick(async () => await DeleteProduct()) />
+            </div>
+        </form>
+    </div>
+}
+
+@functions {
+    public string id { get; set; }
+    Product product;
+
+    protected override async Task OnInitAsync()
+    {
+        product = await productService.Get(id);
+    }
+
+    private async Task DeleteProduct()
+    {
+        await productService.Delete(product);
+        UriHelper.NavigateTo("/products");
+    }
+}

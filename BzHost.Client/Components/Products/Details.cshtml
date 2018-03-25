@@ -1,0 +1,47 @@
+@page "/products/details/{id}"
+@inject ProductService productService
+
+<h2>Details</h2>
+
+@if (product == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <div>
+        <h4>Product</h4>
+        <hr />
+        <dl class="dl-horizontal">
+            <dt>
+                Name
+            </dt>
+
+            <dd>
+                @product.Name
+            </dd>
+
+            <dt>
+                Created At
+            </dt>
+
+            <dd>
+                @product.CreatedAt.ToShortDateString()
+            </dd>
+        </dl>
+    </div>
+    <p>
+        <a href="/products" class="btn btn-default">Back to List</a>
+        <a href="/products/edit/@id" class="btn btn-primary">Edit</a>
+    </p>
+}
+
+@functions {
+    public string id { get; set; }
+    Product product;
+
+    protected override async Task OnInitAsync() 
+    {
+        product = await productService.Get(id);
+    }
+}

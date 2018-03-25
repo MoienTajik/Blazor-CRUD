@@ -1,0 +1,48 @@
+@page "/products"
+@inject ProductService productService
+
+<h2>Products</h2>
+
+@if (products == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <p>
+        <NavLink href="/products/create" class="btn btn-primary">Create New</NavLink>
+    </p>
+
+    <table class='table'>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Created At</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var product in products)
+            {
+                <tr>
+                    <td>@product.Name</td>
+                    <td>@product.CreatedAt.ToShortDateString()</td>
+                    <td>
+                        <a href="/products/edit/@product.ID" class="btn btn-primary">Edit</a>
+                        <a href="/products/details/@product.ID" class="btn btn-default">Details</a>
+                        <a href="/products/delete/@product.ID" class="btn btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+@functions {
+    Product[] products;
+
+    protected override async Task OnInitAsync()
+    {
+        products = await productService.GetAll();
+    }
+}

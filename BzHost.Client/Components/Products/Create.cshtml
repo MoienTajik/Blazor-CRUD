@@ -1,0 +1,39 @@
+@page "/products/create"
+@inject ProductService productService
+@inject Microsoft.AspNetCore.Blazor.Services.IUriHelper UriHelper
+
+<h2>Create</h2>
+
+<form>
+    <div class="form-horizontal">
+        <h4>Product</h4>
+        <hr />
+
+        <div class="form-group">
+            <label for="name" class="control-label col-md-2">Name</label>
+            <div class="col-md-10">
+                <input type="text" name="name" id="name" class="form-control" @bind(Name)>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <a href="/products" class="btn btn-default">Back to List</a>
+                <input type="submit" value="Create" class="btn btn-primary" @onclick(async () => await SubmitForm()) />
+            </div>
+        </div>
+    </div>
+</form>
+
+@functions {
+    public string Name { get; set; }
+
+    private async Task SubmitForm() 
+    {
+        if(!string.IsNullOrWhiteSpace(Name))
+        {
+            await productService.Create(Name);
+            UriHelper.NavigateTo("/products");
+        }
+    }
+}

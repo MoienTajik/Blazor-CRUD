@@ -1,0 +1,53 @@
+@page "/products/edit/{id}"
+@inject Microsoft.AspNetCore.Blazor.Services.IUriHelper UriHelper
+@inject ProductService productService
+
+<h2>Edit</h2>
+
+@if (product == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <form>
+        <div class="form-horizontal">
+            <h4>Product</h4>
+            <hr />
+
+            <div class="form-group">
+                <label for="name" class="control-label col-md-2">Name</label>
+                <div class="col-md-10">
+                    <input type="text" name="Name" id="name" class="form-control" @bind(product.Name)>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <a href="/products" class="btn btn-default">Back to List</a>
+                    <input type="submit" value="Save" class="btn btn-primary" @onclick(async () => await EditProduct()) />
+                </div>
+            </div>
+        </div>
+    </form>
+}
+
+@functions {
+    public string id { get; set; }
+
+    Product product;
+
+    protected override async Task OnInitAsync()
+    {
+        product = await productService.Get(id);
+    }
+
+    private async Task EditProduct()
+    {
+        if(!string.IsNullOrWhiteSpace(product.Name))
+        {
+            await productService.Edit(product);
+            UriHelper.NavigateTo("/products");
+        }
+    }
+}

@@ -1,0 +1,30 @@
+﻿<div class='main-nav'>
+    <div class='navbar navbar-inverse'>
+        <div class='navbar-header'>
+            <button type='button' class='navbar-toggle' data-toggle='collapse' data-target='.navbar-collapse'>
+                <span class='sr-only'>Toggle navigation</span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+                <span class='icon-bar'></span>
+            </button>
+            <a class='navbar-brand' href='/'>Blazor CRUD</a>
+        </div>
+
+        <div class='clearfix'></div>
+
+        <div class='navbar-collapse collapse'>
+            <ul class='nav navbar-nav'>
+                <li>
+                    <NavLink href="/" Match=NavLinkMatch.All>
+                        <span class='glyphicon glyphicon-home'></span> Home
+                    </NavLink>
+                </li>
+                 <li>
+                    <NavLink href="/products">
+                        <span class="glyphicon glyphicon-shopping-cart"></span> Products
+                    </NavLink>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
