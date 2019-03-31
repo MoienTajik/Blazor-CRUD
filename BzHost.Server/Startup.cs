@@ -13,7 +13,7 @@ namespace BzHost.Server
 {
     public class Startup
     {
-         public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
@@ -36,8 +36,8 @@ namespace BzHost.Server
                 });
             });
 
-            services.AddDbContextPool<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration["DefaultConnection"]));
+            services.AddDbContext<ApplicationDbContext>(options =>
+                options.UseInMemoryDatabase("BlazorDB"));
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
